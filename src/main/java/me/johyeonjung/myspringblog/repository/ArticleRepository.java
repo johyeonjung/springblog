@@ -7,4 +7,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface ArticleRepository extends JpaRepository<Article, Long>
+public interface ArticleRepository extends JpaRepository<Article, Long> {
+
+    @Query("""
+        select a
+        from Article a
+        where lower(a.title)   like lower(concat('%', :q, '%'))
+           or lower(a.content) like lower(concat('%', :q, '%'))
+    """)
+    Page<Article> search(@Param("q") String q, Pageable pageable);
+}

@@ -24,6 +24,7 @@ public class Article extends BaseTimeEntity {
         //작성자
         @ManyToOne(fetch=FetchType.LAZY, optional=false)
         @JoinColumn(name="author_id")
+        //JPA는 관계를 객체 단위로 하기 때문에 숫자가 아니라 user 엔티티 인스턴스가 필요함
         private User author;
 
         //제목

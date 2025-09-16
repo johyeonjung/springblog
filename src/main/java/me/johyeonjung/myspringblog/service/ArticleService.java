@@ -22,8 +22,8 @@ public class ArticleService {
     private final UserRepository userRepository;
 
     @Transactional
-    public ArticleResponse create(ArticleRequest req) {
-        User author = userRepository.findById(req.getAuthorId())
+    public ArticleResponse create(ArticleRequest req, Long authorId ) {
+        User author = userRepository.findById(authorId)
                 .orElseThrow(() -> new EntityNotFoundException("작성자 정보를 찾을 수 없음"));
 
         Article article = Article.builder()
@@ -35,6 +35,7 @@ public class ArticleService {
         Article saved = articleRepository.save(article);
         return toResponse(saved);
     }
+    //블로그 글 하나를 조회하는 메서드
     public ArticleResponse get(Long id) {
         Article article = articleRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("게시글을 찾을 수 없음"));
@@ -43,6 +44,7 @@ public class ArticleService {
 
     public List<ArticleResponse> getAll() {
         return articleRepository.findAll().stream()
+                //엔티티 -> DTO
                 .map(this::toResponse)
                 .toList();
     }
@@ -51,7 +53,7 @@ public class ArticleService {
     public ArticleResponse update(Long id, Long currentUserId, ArticleRequest req) {
         Article article = articleRepository.findById(id)
                 .orElseThrow( () -> new EntityNotFoundException("게시글을 찾을 수 없음"));
-
+        //보안상 위험, 이후 토큰으로 수정
         if(!article.isAuthor(currentUserId)) {
             throw new IllegalStateException("본인 글만 수정할 수 있습니다.");
         }
