@@ -21,7 +21,15 @@
       </div>
       <div class="card-body">
         <h5 class="card-title" th:text="${item.title}"></h5>
-        <p class="card-text" th:text="${item.content}"></p>
+        <!-- 내용 길면 50자만 보이고 ... 처리 -->
+        <p class="card-text"
+           th:text="${#strings.length(item.content) > 50 ? #strings.substring(item.content, 0, 50) + '...' : item.content}">
+
+
+          <!-- 작성자 표시 -->
+        <p class="text-muted">작성자: <span th:text="${item.authorName}"></span></p>
+
+
         <a th:href="@{/articles/{id}(id=${item.id})}" class="btn btn-primary">보러가기</a>
       </div>
     </div>

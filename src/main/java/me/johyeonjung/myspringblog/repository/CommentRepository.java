@@ -7,5 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    List<Comment> findByArticleOrderByCreatedAtAsc(Article article);
+    // 글 기준으로 댓글 목록 조회(최신순)
+    List<Comment> findByArticleOrderByCreatedAtDesc(Article article);
 }

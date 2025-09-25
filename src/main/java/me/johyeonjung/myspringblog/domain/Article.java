@@ -31,6 +31,11 @@ public class Article extends BaseTimeEntity {
         @Column(nullable = false, length = 200)
         private String title;
 
+        //태그
+        @Column(nullable = false, length = 200)
+        private String tag;
+
+
         //내용
         @Column(nullable=false, columnDefinition = "TEXT")
         private String content;
@@ -38,6 +43,7 @@ public class Article extends BaseTimeEntity {
         //편의 메서드
         public void update(String title, String content) {
                 this.title=title;
+                this.tag = tag;
                 this.content=content;
         }
 

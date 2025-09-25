@@ -31,13 +31,11 @@ public class Comment extends BaseTimeEntity {
 
     //본인 댓글인지 권한 체크용
     public boolean isAuthor(Long userId) {
-
         return author !=null && author.getId().equals(userId);
     }
 
     //내용 수정시 사용할 도메인 메서드
     public void changeContent(String content) {
-
         this.content = content;
     }
 }

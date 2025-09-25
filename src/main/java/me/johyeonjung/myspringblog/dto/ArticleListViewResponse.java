@@ -8,10 +8,12 @@ public class ArticleListViewResponse {
     private final Long id;
     private final String title;
     private final String content;
+    private final String authorName;
 
     public ArticleListViewResponse(ArticleResponse dto) {
         this.id = dto.getId();
         this.title = dto.getTitle();
         this.content = dto.getContent();
+        this.authorName = dto.getAuthorName();
     }
 }

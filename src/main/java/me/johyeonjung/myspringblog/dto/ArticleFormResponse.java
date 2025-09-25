@@ -9,12 +9,16 @@ import lombok.NoArgsConstructor;
 public class ArticleFormResponse
 {   private Long id;
     private String title;
+    private String tag;
     private String content;
+    private String authorName;
 
 
     public ArticleFormResponse(ArticleResponse dto) {
         this.id = dto.getId();
+        this.tag = dto.getTag();
         this.title = dto.getTitle();
         this.content = dto.getContent();
+        this.authorName = dto.getAuthorName();
     }
 }

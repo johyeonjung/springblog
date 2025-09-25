@@ -2,12 +2,10 @@ package me.johyeonjung.myspringblog.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.johyeonjung.myspringblog.domain.Article;
-import me.johyeonjung.myspringblog.dto.ArticleDetailViewResponse;
-import me.johyeonjung.myspringblog.dto.ArticleFormResponse;
-import me.johyeonjung.myspringblog.dto.ArticleListViewResponse;
-import me.johyeonjung.myspringblog.dto.ArticleResponse;
+import me.johyeonjung.myspringblog.dto.*;
 import me.johyeonjung.myspringblog.service.ArticleService;
 import me.johyeonjung.myspringblog.service.BlogService;
+import me.johyeonjung.myspringblog.service.CommentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +19,7 @@ import java.util.List;
 public class ArticleViewController {
 
     private final ArticleService articleService;
+    private final CommentService commentService;
 
 
     @GetMapping("/articles")
@@ -38,16 +37,21 @@ public class ArticleViewController {
         ArticleResponse article = articleService.get(id);
         model.addAttribute("article", new ArticleDetailViewResponse(article));
 
+        //댓글 목록 추가
+        List<CommentResponse> comments = commentService.getComments(id);
+        model.addAttribute("comments", comments);
+
         return "article";
     }
     @GetMapping("/new-article")
     public String newArticle(@RequestParam(required=false) Long id, Model model) {
         if (id == null) {
-            model.addAttribute("article", new ArticleFormResponse());
+            model.addAttribute("article", new ArticleDetailViewResponse());
         } else {
             ArticleResponse article = articleService.get(id);
-            model.addAttribute("article", new ArticleFormResponse(article));
+            model.addAttribute("article", new ArticleDetailViewResponse(article));
         }
+
 
         return "newArticle";
     }
