@@ -48,6 +48,11 @@ public class ArticleService {
                 .map(this::toResponse)
                 .toList();
     }
+    public ArticleResponse findByTag(Long id, String tag) {
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("게시글을 찾을 수 없음"));
+        return toResponse(article);
+    }
 
     @Transactional
     public ArticleResponse update(Long id, Long currentUserId, ArticleRequest req) {
@@ -74,6 +79,8 @@ public class ArticleService {
         articleRepository.delete(article);
     }
 
+
+
     private ArticleResponse toResponse(Article a) {
         return ArticleResponse.builder()
                 .id(a.getId())
@@ -81,6 +88,7 @@ public class ArticleService {
                 .authorName(a.getAuthor().getUsername())
                 .title(a.getTitle())
                 .content(a.getContent())
+                .tag(a.getTag())
                 .createdAt(a.getCreatedAt())
                 .updatedAt(a.getUpdatedAt())
                 .build();

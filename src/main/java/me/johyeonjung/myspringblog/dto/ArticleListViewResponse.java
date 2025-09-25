@@ -2,7 +2,7 @@ package me.johyeonjung.myspringblog.dto;
 
 import lombok.Getter;
 import me.johyeonjung.myspringblog.domain.Article;
-
+//여러 개의 게시글을 간단하게 표시하는 목록 조회용 DTO
 @Getter
 public class ArticleListViewResponse {
     private final Long id;

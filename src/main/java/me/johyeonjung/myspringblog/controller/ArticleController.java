@@ -35,6 +35,13 @@ public class ArticleController {
                 .body(created);
 
     }
+    //태그에 해당되는 글을 찾음
+    @GetMapping(/{tag})
+    public ResponseEntity<ArticleResponse> findTag(@PathVariable String tag) {
+        return ResponseEntity.ok(articleService.findByTag(tag));
+    }
+
+
     //ID 값에 해당하는 글 하나를 찾음
     @GetMapping("/{id}")
     public ResponseEntity<ArticleResponse> get(@PathVariable Long id) {
@@ -63,4 +70,6 @@ public class ArticleController {
         articleService.delete(id, user.getId());
         return ResponseEntity.noContent().build();
     }
+
+
 }
