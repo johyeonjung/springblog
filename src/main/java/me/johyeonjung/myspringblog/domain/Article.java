@@ -3,7 +3,7 @@ package me.johyeonjung.myspringblog.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -39,10 +39,10 @@ public class Article extends BaseTimeEntity {
         @Column(nullable=false, columnDefinition = "TEXT")
         private String content;
 
-
-        //게시글 엔티티에도 해시태그들을 모아둘수 있도록 선언
-        @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-        private Set<Tag> tags = new LinkedHashSet<>();
+        @OneToMany(mappedBy = "article")  // 주인: ArticleTag.article
+        @ToString.Exclude
+        @Setter
+        private Set<ArticleTag> articleTags = new HashSet<>();
 
         //편의 메서드
         public void update(String title, String content) {

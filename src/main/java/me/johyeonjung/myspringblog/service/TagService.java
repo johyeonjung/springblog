@@ -3,8 +3,6 @@ package me.johyeonjung.myspringblog.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import me.johyeonjung.myspringblog.domain.Tag;
-import me.johyeonjung.myspringblog.repository.ArticleTagRepository;
-import me.johyeonjung.myspringblog.repository.TagRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

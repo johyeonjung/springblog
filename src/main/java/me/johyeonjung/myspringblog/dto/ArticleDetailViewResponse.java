@@ -2,8 +2,11 @@ package me.johyeonjung.myspringblog.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import me.johyeonjung.myspringblog.domain.ArticleTag;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @Getter
@@ -12,7 +15,7 @@ public class ArticleDetailViewResponse {
     //단일 게시글 상세 조회 시 사용
     private Long id;
     private String title;
-    private String tag;
+    Set<ArticleTag> tagNames;
     private String content;
     private String authorName;
     private LocalDateTime createdAt;
@@ -22,7 +25,7 @@ public class ArticleDetailViewResponse {
     public ArticleDetailViewResponse(ArticleResponse dto) {
         this.id = dto.getId();
         this.title = dto.getTitle();
-        this.tag = dto.getTag();
+        this.tagNames = dto.getTagNames();
         this.content = dto.getContent();
         this.authorName = dto.getAuthorName();
         this.createdAt = dto.getCreatedAt();

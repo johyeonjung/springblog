@@ -13,7 +13,6 @@ public class ArticleRequest {
     @Size(max=200)
     private String title;
 
-    private String tag;
 
     @NotBlank
     private String content;
