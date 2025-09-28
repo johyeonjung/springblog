@@ -3,10 +3,12 @@ package me.johyeonjung.myspringblog.service;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import me.johyeonjung.myspringblog.domain.Article;
+import me.johyeonjung.myspringblog.domain.Tag;
 import me.johyeonjung.myspringblog.domain.User;
 import me.johyeonjung.myspringblog.dto.ArticleRequest;
 import me.johyeonjung.myspringblog.dto.ArticleResponse;
 import me.johyeonjung.myspringblog.repository.ArticleRepository;
+import me.johyeonjung.myspringblog.repository.TagRepository;
 import me.johyeonjung.myspringblog.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,7 @@ public class ArticleService {
 
     private final ArticleRepository articleRepository;
     private final UserRepository userRepository;
+    private final TagRepository tagRepository;
 
     @Transactional
     public ArticleResponse create(ArticleRequest req, Long authorId ) {
@@ -48,11 +51,12 @@ public class ArticleService {
                 .map(this::toResponse)
                 .toList();
     }
-    public ArticleResponse findByTag(Long id, String tag) {
+    public ArticleResponse addTag(Long id, String tag) {
         Article article = articleRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("게시글을 찾을 수 없음"));
         return toResponse(article);
     }
+
 
     @Transactional
     public ArticleResponse update(Long id, Long currentUserId, ArticleRequest req) {
@@ -62,10 +66,17 @@ public class ArticleService {
         if(!article.isAuthor(currentUserId)) {
             throw new IllegalStateException("본인 글만 수정할 수 있습니다.");
         }
-
         article.update(req.getTitle(), req.getContent());
         return toResponse(article);
     }
+
+//    @Transactional
+//    public ArticleResponse updateTag(String tagName) {
+//        Tag tag = tagRepository.findByTag(tagName)
+//                .orElseThrow( () -> new EntityNotFoundException("게시글을 찾을 수 없음"));
+//        tag.updateTag(tagName);
+//        return toResponse(tag);
+//    }
 
     @Transactional
     public void delete(Long id, Long currentUserId) {
@@ -88,7 +99,6 @@ public class ArticleService {
                 .authorName(a.getAuthor().getUsername())
                 .title(a.getTitle())
                 .content(a.getContent())
-                .tag(a.getTag())
                 .createdAt(a.getCreatedAt())
                 .updatedAt(a.getUpdatedAt())
                 .build();

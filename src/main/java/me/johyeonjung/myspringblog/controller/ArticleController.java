@@ -2,6 +2,7 @@ package me.johyeonjung.myspringblog.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import me.johyeonjung.myspringblog.domain.Tag;
 import me.johyeonjung.myspringblog.dto.ArticleRequest;
 import me.johyeonjung.myspringblog.dto.ArticleResponse;
 import me.johyeonjung.myspringblog.security.UserPrincipal;
@@ -35,11 +36,11 @@ public class ArticleController {
                 .body(created);
 
     }
-    //태그에 해당되는 글을 찾음
-    @GetMapping(/{tag})
-    public ResponseEntity<ArticleResponse> findTag(@PathVariable String tag) {
-        return ResponseEntity.ok(articleService.findByTag(tag));
-    }
+//    //태그에 해당되는 글을 찾음
+//    @GetMapping("/{tag}")
+//    public ResponseEntity<ArticleResponse> findTag(@PathVariable String tag) {
+//        return ResponseEntity.ok(articleService.findByTag(tag));
+//    }
 
 
     //ID 값에 해당하는 글 하나를 찾음
@@ -54,7 +55,7 @@ public class ArticleController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ArticleResponse> update(
+    public ResponseEntity<ArticleResponse>update(
             @PathVariable Long id,
             @AuthenticationPrincipal UserPrincipal user,
             @RequestBody @Valid ArticleRequest req

@@ -33,6 +33,7 @@ public class User extends BaseTimeEntity{
     private String password;
 
     public void changeDisplayName(String displayName) {
+
         this.displayName = displayName;
     }
 }

@@ -22,7 +22,6 @@ public class ArticleRequest {
         return Article.builder()
                 .author(author) //여기서 author 필드에 User 객체 매핑
                 .title(title)
-                .tag(tag)
                 .content(content)
                 .build();
     }

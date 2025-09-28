@@ -3,11 +3,14 @@ package me.johyeonjung.myspringblog.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Entity
 @Table(
         name="articles",
         indexes={
-               @Index(name="idx_article_created_at", columnList="created_at"),
+                @Index(name="idx_article_created_at", columnList="created_at"),
                 @Index(name="idx_article_title", columnList="title")
         }
 )
@@ -19,6 +22,7 @@ import lombok.*;
 public class Article extends BaseTimeEntity {
         @Id
         @GeneratedValue(strategy=GenerationType.IDENTITY)
+        @Column(name = "article_id")
         private Long id;
 
         //작성자
@@ -31,19 +35,18 @@ public class Article extends BaseTimeEntity {
         @Column(nullable = false, length = 200)
         private String title;
 
-        //태그
-        @Column(nullable = false, length = 200)
-        private String tag;
-
-
         //내용
         @Column(nullable=false, columnDefinition = "TEXT")
         private String content;
 
+
+        //게시글 엔티티에도 해시태그들을 모아둘수 있도록 선언
+        @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+        private Set<Tag> tags = new LinkedHashSet<>();
+
         //편의 메서드
         public void update(String title, String content) {
                 this.title=title;
-                this.tag = tag;
                 this.content=content;
         }
 
